@@ -3,6 +3,7 @@
 ## O Que É SOAP?
 
 **SOAP** é o padrão universal de documentação clínica em prontuários eletrônicos:
+
 - **S** - Subjetivo (história do paciente)
 - **O** - Objetivo (achados/dados do exame)
 - **A** - Avaliação (interpretação clínica)
@@ -15,9 +16,10 @@ No SUS/e-SUS, toda anotação deve seguir esse formato.
 ## Por Que É Importante?
 
 ### 1. **Blindagem Jurídica**
+
 Decisão clínica documentada + justificada = protegem o médico em casos de litígio.
 
-```
+```txt
 ❌ Sem SOAP:
 "Não solicitei CTA porque o paciente era improvável"
 → Interpretação subjetiva. Pode ser questionada.
@@ -30,7 +32,9 @@ Conforme protocolo, solicitar D-Dímero."
 ```
 
 ### 2. **Rastreabilidade**
+
 FluxSUS registra:
+
 - Timestamp exato
 - Versão do algoritmo usado
 - Todos os critérios avaliados
@@ -38,7 +42,9 @@ FluxSUS registra:
 - Recomendação gerada
 
 ### 3. **Conformidade e-SUS**
+
 Texto compatível com:
+
 - ✅ Prontuário e-SUS
 - ✅ Sistemas municipais
 - ✅ Auditoria
@@ -49,7 +55,8 @@ Texto compatível com:
 ## Exemplo Real: Wells Score
 
 ### Cenário Médico
-```
+
+```txt
 Paciente: João da Silva, 55 anos
 Queixa: Dispneia de 2h
 
@@ -63,7 +70,7 @@ Score Total: 4.5 pontos = PROVÁVEL
 
 FluxSUS gera automaticamente:
 
-```
+```txt
 ╔════════════════════════════════════════════════════════════╗
 ║        AVALIAÇÃO DE RISCO - TROMBOEMBOLISMO PULMONAR       ║
 ║                    WELLS SCORE PE                          ║
@@ -141,7 +148,8 @@ FERRAMENTA: FluxSUS v1.0 | SYNC: Automático (24h)
 ## 🛡️ Proteção Jurídica - Como Funciona?
 
 ### Cenário 1: Investigação por Conselho Regional
-```
+
+```txt
 Acusação: "Você não solicitou CT, e o paciente teve TEP"
 
 Defesa com FluxSUS:
@@ -159,7 +167,8 @@ Defesa com FluxSUS:
 ```
 
 ### Cenário 2: Auditoria SUS/CCIH
-```
+
+```txt
 Auditoria: "Por que solicitaram CTA em 30% dos casos?"
 
 Com FluxSUS (Wells Score):
@@ -179,25 +188,30 @@ Com FluxSUS (Wells Score):
 ## 📊 Componentes da SOAP Automática
 
 ### Seção "S - SUBJETIVO"
+
 - Breve descrição da história clínica
 
 ### Seção "O - OBJETIVO"
+
 - ✅ Todos os critérios avaliados (com scores)
 - ✅ Score total calculado
 - ✅ Classificação de risco
 
 ### Seção "A - AVALIAÇÃO"
+
 - ✅ Interpretação automatizada
 - ✅ Referências a algoritmos validados
 - ✅ Citação de NPV/especificidade quando relevante
 - ✅ Justificativa técnica (MBE)
 
 ### Seção "P - PLANO"
+
 - ✅ Ação recomendada clara
 - ✅ Próximos passos
 - ✅ Timestamp de geração
 
 ### BÔNUS: "BLINDAGEM JURÍDICA"
+
 - ✅ Resumo de proteção legal
 - ✅ Referência ao "Standard of Care"
 - ✅ Hash/Versão do algoritmo
@@ -219,7 +233,7 @@ Com FluxSUS (Wells Score):
 ## ⚖️ Protecção Legal por Tipo de Litígio
 
 | Situação | Proteção |
-|----------|----------|
+| --- | --- |
 | Paciente alega negligência | ✅ SOAP prova decisão baseada em protocolo |
 | Conselho Regional investiga | ✅ SOAP mostra Standard of Care |
 | Auditoria de custos | ✅ SOAP justifica exame/não-exame |

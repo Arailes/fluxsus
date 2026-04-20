@@ -5,6 +5,7 @@
 O **Wells Score** é um algoritmo de estratificação de risco clínico para **Tromboembolismo Pulmonar (TEP)**.
 
 Usando apenas **critérios clínicos simples**, permite ao médico decidir:
+
 - 🟢 Se pode fazer apenas D-Dímero (evitando tomografia)
 - 🔴 Se precisa fazer Angiotomografia de Tórax (CTA) imediatamente
 
@@ -19,7 +20,7 @@ Reduzir número de **tomografias desnecessárias** mantendo **segurança do paci
 ## 📊 Critérios Clínicos
 
 | Critério | Pontos |
-|----------|--------|
+| --- | --- |
 | Sinais de TVP (Edema + Dor em membros) | 3.0 |
 | TEP como diagnóstico principal/provável | 3.0 |
 | Frequência Cardíaca > 100 bpm | 1.5 |
@@ -35,7 +36,7 @@ Reduzir número de **tomografias desnecessárias** mantendo **segurança do paci
 **Ação:** Solicitar D-Dímero  
 **Se D-Dímero negativo:** TEP excluído com segurança - **NÃO pedir CTA**
 
-```
+```txt
 Benefício: Evita radiação desnecessária (~1.5 mSv por CTA)
 Economia: ~R$ 1.500 por caso evitado
 ```
@@ -44,7 +45,7 @@ Economia: ~R$ 1.500 por caso evitado
 
 **Ação:** Solicitar **Angiotomografia de Tórax (CTA)** IMEDIATAMENTE
 
-```
+```txt
 Razão: Risco clínico justifica exposição à radiação
 Urgência: Não adiar. Considerar anticoagulação conforme protocolo.
 ```
@@ -52,6 +53,7 @@ Urgência: Não adiar. Considerar anticoagulação conforme protocolo.
 ## 🏗️ Arquitetura
 
 ### Camada de Dados (`lib/core/data/wells_data.dart`)
+
 ```dart
 WellsData.criteria          // Mapa de critérios e pontos
 WellsData.interpretation    // Tabelas de risco (UNLIKELY/LIKELY)
@@ -60,6 +62,7 @@ WellsData.susSavingsPotential // Economia estimada
 ```
 
 ### Motor de Cálculo (`lib/core/logic/wells_engine.dart`)
+
 ```dart
 WellsEngine.calculateScore()        // Calcula score total
 WellsEngine.getRiskClassification() // Retorna UNLIKELY/LIKELY
@@ -68,6 +71,7 @@ WellsEngine.calculateClinicalImpact() // Impacto em economia SUS
 ```
 
 ### Interface (`lib/presentation/screens/wells_screen.dart`)
+
 - ✅ Checklist interativo dos critérios
 - ✅ Score em tempo real
 - ✅ Classificação visual (Core verde/vermelho)
@@ -77,23 +81,27 @@ WellsEngine.calculateClinicalImpact() // Impacto em economia SUS
 ## 💻 Como Usar
 
 ### 1. Navegar para a calculadora
-```dart
+
+```txt
 // HomeScreen → Tap em "Wells Score - TEP"
 ```
 
 ### 2. Selecionar critérios presentes
-```
+
+```txt
 ✓ Sinais de TVP
 ✓ Frequência Cardíaca > 100
 ```
 
 ### 3. Score é calculado automaticamente
-```
+
+```txt
 Score: 4.5 → TEP PROVÁVEL
 ```
 
 ### 4. Recomendação é exibida
-```
+
+```txt
 🔴 Ação: Solicitar CTA TÓRAX imediatamente
 ```
 
@@ -128,4 +136,4 @@ A app sincroniza automaticamente a cada 24h.
 
 ---
 
-**Desenvolvido com ❤️ para o SUS**
+## Desenvolvido com ❤️ para o SUS

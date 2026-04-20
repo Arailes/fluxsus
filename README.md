@@ -1,6 +1,6 @@
 # FluxSUS 🏥
 
-**Calculadora Clínica Inteligente para o SUS**
+## Calculadora Clínica Inteligente para o SUS
 
 Ferramentas de apoio clínico com sincronização automática de protocolos e justificativa técnica para e-SUS.
 
@@ -11,23 +11,27 @@ Ferramentas de apoio clínico com sincronização automática de protocolos e ju
 ### 📊 **Calculadoras Implementadas**
 
 #### 1️⃣ **Risco Cardiovascular**
+
 - Calcula risco de doença cardiovascular baseado em idade
 - Recomendações de medicação SUS (RENAME)
 - Metas de LDL personalizadas
 
 #### 2️⃣ **Wells Score (TEP)** ⭐
+
 - Estratificação de risco para Tromboembolismo Pulmonar
 - Versão "Dois Níveis" otimizada para pronto-socorro
 - **Reduz 30% das tomografias desnecessárias**
 - Cópia automática de justificativa SOAP para e-SUS
 
 ### 🔄 **Sincronização Automática**
+
 - Sincroniza com `guidelines.json` no GitHub
 - Verifica updates a cada 24h
 - Funciona offline (cache local com Hive)
 - Sem necessidade de redesenho da app
 
 ### 💾 **Persistência Local**
+
 - Hive para armazenamento offline
 - Cache inteligente de guidelines
 - Histórico de sincronização
@@ -36,7 +40,7 @@ Ferramentas de apoio clínico com sincronização automática de protocolos e ju
 
 ## 🏗️ **Arquitetura**
 
-```
+```txt
 lib/
 ├── core/
 │   ├── data/              # Tabelas e mapas clínicos
@@ -68,16 +72,19 @@ lib/
 ## 🚀 **Quick Start**
 
 ### 1. **Instalar Dependências**
+
 ```bash
 flutter pub get
 ```
 
 ### 2. **Rodar a App**
+
 ```bash
 flutter run
 ```
 
 ### 3. **Home Screen**
+
 - Menu com calculadoras disponíveis
 - Status de sincronização
 - Info sobre ferramentas
@@ -104,7 +111,7 @@ flutter run
 ## 💰 **Impacto SUS**
 
 | Métrica | Valor |
-|---------|-------|
+| --- | --- |
 | **CTs Evitadas** | ~30% |
 | **Economia/Paciente** | ~R$ 1.500 |
 | **Radiação Evitada** | 1.5 mSv |
@@ -132,7 +139,7 @@ flutter run
 
 ## 📦 **Guidelines Remotos**
 
-```
+```txt
 URL: https://raw.githubusercontent.com/Arailes/fluxsus/main/guidelines.json
 
 Contém:
@@ -151,6 +158,7 @@ A app sincroniza automaticamente a cada 24h. Para atualizar, edite `guidelines.j
 ### Adicionar Nova Calculadora
 
 1. **Criar arquivo de dados** (`lib/core/data/nova_calculadora_data.dart`)
+
    ```dart
    class NovaCalculadoraData {
      static const Map<String, dynamic> criteria = { ... };
@@ -159,6 +167,7 @@ A app sincroniza automaticamente a cada 24h. Para atualizar, edite `guidelines.j
    ```
 
 2. **Criar motor** (`lib/core/logic/nova_calculadora_engine.dart`)
+
    ```dart
    class NovaCalculadoraEngine {
      static double calculate(Map<String, bool> inputs) { ... }
@@ -166,11 +175,13 @@ A app sincroniza automaticamente a cada 24h. Para atualizar, edite `guidelines.j
    ```
 
 3. **Criar tela** (`lib/presentation/screens/nova_calculadora_screen.dart`)
+
    - Reutilizar tema SUS
    - Usar CheckboxListTile para entrada
    - Integrar com ClipboardUtils
 
 4. **Adicionar ao menu** (`home_screen.dart`)
+
    ```dart
    _buildCalculatorCard(
      context,
