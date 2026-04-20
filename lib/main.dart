@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/services/service_locator.dart';
-import 'presentation/screens/cardio_screen.dart';
+import 'presentation/screens/home_screen.dart';
 import 'presentation/theme/sus_theme.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class FluxSUSApp extends StatelessWidget {
       title: 'FluxSUS',
       theme: SUSTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
-      home: const CardioScreen(),
+      home: const HomeScreen(),
     );
   }
 }
