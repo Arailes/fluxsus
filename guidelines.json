@@ -1,0 +1,38 @@
+{
+  "version": 1.1,
+  "last_update": "2026-04-20",
+  "data": {
+    "age_points": {
+      "MALE": {
+        "30-34": -1,
+        "35-39": 0,
+        "40-44": 1,
+        "45-49": 2,
+        "50-54": 3
+      }
+    },
+    "risk_levels": {
+      "BAIXO": {
+        "min": 0,
+        "max": 5,
+        "color": "0xFF4CAF50",
+        "goal": "LDL < 100",
+        "drug": "Sinvastatina 20mg (RENAME)"
+      },
+      "INTERMEDIARIO": {
+        "min": 5,
+        "max": 20,
+        "color": "0xFFFFC107",
+        "goal": "LDL < 70",
+        "drug": "Sinvastatina 40mg (RENAME)"
+      },
+      "ALTO": {
+        "min": 20,
+        "max": 100,
+        "color": "0xFFF44336",
+        "goal": "LDL < 50",
+        "drug": "Atorvastatina 40mg (Protocolo Especializado)"
+      }
+    }
+  }
+}
