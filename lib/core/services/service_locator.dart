@@ -4,6 +4,7 @@
 import 'package:hive/hive.dart';
 import 'update_service.dart';
 import 'sync_manager.dart';
+import 'sync_stats_service.dart';
 
 /// Service Locator simplificado (pode ser substituído por GetIt depois)
 class ServiceLocator {
@@ -41,13 +42,21 @@ Future<void> initializeApp() async {
     // Inicializa Hive (armazenamento local)
     print('📦 Configurando Hive...');
     await Hive.openBox('settings');
+    await Hive.openBox('telemetry'); // Para telemetria
 
     // Registra serviços
     print('⚙️ Registrando serviços...');
     final updateService = UpdateService();
     ServiceLocator.register<UpdateService>(updateService);
 
-    final syncManager = SyncManager(updateService: updateService);
+    // Registra serviço de telemetria (NOVO)
+    final syncStatsService = SyncStatsService();
+    ServiceLocator.register<SyncStatsService>(syncStatsService);
+
+    final syncManager = SyncManager(
+      updateService: updateService,
+      syncStatsService: syncStatsService, // NOVO
+    );
     ServiceLocator.register<SyncManager>(syncManager);
 
     // Inicia sincronização automática
