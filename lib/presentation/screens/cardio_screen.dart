@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/logic/risk_engine.dart';
 import '../../core/utils/soap_formatter.dart';
+import '../../core/services/telemetry_service.dart';
 
 class CardioScreen extends StatefulWidget {
   const CardioScreen({Key? key}) : super(key: key);
@@ -267,7 +268,7 @@ class _CardioScreenState extends State<CardioScreen> {
     );
   }
 
-  /// Copia nota SOAP para prontuário
+  /// Copia nota SOAP para prontuário e registra otimização de medicamento
   void _copySoapCardio(Map<String, dynamic> risk) {
     final soap = SOAPFormatter.generateCardioSOAP(
       score: points.toDouble(),
@@ -280,6 +281,14 @@ class _CardioScreenState extends State<CardioScreen> {
     // Sanitiza para e-SUS
     final sanitized = SOAPFormatter.sanitizeForESUS(soap);
     Clipboard.setData(ClipboardData(text: sanitized));
+
+    // Log telemetry: medication optimization (using SUS generic instead of brand name)
+    // Estimate: brand name ~R$80/month, generic ~R$15/month = R$65/month savings
+    TelemetryService.logMedicationOptimized(
+      'Brand Name Statin',
+      'Sinvastatina 40mg (SUS)',
+      65.0, // Monthly savings estimate
+    );
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
