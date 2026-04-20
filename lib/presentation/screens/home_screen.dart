@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'cardio_screen.dart';
 import 'wells_screen.dart';
+import 'savings_dashboard_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -53,6 +54,17 @@ class HomeScreen extends StatelessWidget {
                 description: 'Estratifique risco de tromboembolismo pulmonar',
                 color: Colors.orange,
                 onTap: () => _navigateTo(context, const WellsScreen()),
+              ),
+              const SizedBox(height: 16),
+
+              // Savings Dashboard Card
+              _buildCalculatorCard(
+                context,
+                icon: Icons.savings,
+                title: 'Economia SUS',
+                description: 'Visualize impacto de decisões racionais na economia',
+                color: Colors.green,
+                onTap: () => _navigateTo(context, const SavingsDashboardScreen()),
               ),
               const SizedBox(height: 16),
 

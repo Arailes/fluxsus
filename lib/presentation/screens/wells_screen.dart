@@ -8,6 +8,7 @@ import '../../core/logic/wells_engine.dart';
 import '../../core/data/wells_data.dart';
 import '../../core/utils/clipboard_utils.dart';
 import '../../core/utils/soap_formatter.dart';
+import '../../core/services/telemetry_service.dart';
 
 class WellsScreen extends StatefulWidget {
   const WellsScreen({Key? key}) : super(key: key);
@@ -306,11 +307,19 @@ class _WellsScreenState extends State<WellsScreen> {
     );
   }
 
-  /// Exibe resultado em snackbar
+  /// Exibe resultado em snackbar e registra telemetria
   void _showResultSnackbar(String riskLevel) {
     final message = riskLevel == 'UNLIKELY'
         ? '✅ D-Dímero pode excluir TEP com segurança'
         : '🚨 Realizar Angiotomografia IMEDIATAMENTE';
+
+    // Log telemetry when exam is avoided
+    if (riskLevel == 'UNLIKELY') {
+      TelemetryService.logExamAvoided(
+        'ANGIO_TC_CHEST',
+        'wells_unlikely_${currentScore.toInt()}pts',
+      );
+    }
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
