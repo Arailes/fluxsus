@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../core/logic/wells_engine.dart';
 import '../../core/data/wells_data.dart';
 import '../../core/utils/clipboard_utils.dart';
+import '../../core/utils/soap_formatter.dart';
 
 class WellsScreen extends StatefulWidget {
   const WellsScreen({Key? key}) : super(key: key);
@@ -58,17 +59,28 @@ class _WellsScreenState extends State<WellsScreen> {
     });
   }
 
-  /// Copia justificativa técnica para prontuário
+  /// Copia justificativa técnica SOAP para prontuário
   void _copyTechnicalJustification(Map<String, dynamic> recommendation) {
-    final text = _generateSOAPText(recommendation);
-    final sanitized = ClipboardUtils.sanitizeForSOAP(text);
-    
+    final soap = SOAPFormatter.generateWellsSOAP(
+      score: currentScore,
+      riskLevel: recommendation['level'] as String,
+      label: recommendation['label'] as String,
+      action: recommendation['action'] as String,
+      selectedCriteria: selectedCriteria.toList(),
+      criteriaScores: WellsData.criteria,
+    );
+
+    // Sanitiza para e-SUS (remove caracteres especiais)
+    final sanitized = SOAPFormatter.sanitizeForESUS(soap);
+
     Clipboard.setData(ClipboardData(text: sanitized));
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('✅ Justificativa copiada para prontuário!'),
-        duration: const Duration(seconds: 2),
+        content: const Text(
+          '✅ SOAP copiado! Cole no prontuário e-SUS (Avaliação)',
+        ),
+        duration: const Duration(seconds: 3),
         backgroundColor: susGreen,
       ),
     );
@@ -76,49 +88,14 @@ class _WellsScreenState extends State<WellsScreen> {
 
   /// Gera texto em formato SOAP para e-SUS
   String _generateSOAPText(Map<String, dynamic> recommendation) {
-    final score = currentScore.toStringAsFixed(1);
-    final level = recommendation['level'] as String;
-    final label = recommendation['label'] as String;
-    final action = recommendation['action'] as String;
-    final reference = ClipboardUtils.getAlgorithmReference('wells');
-
-    final criteriaList = selectedCriteria
-        .map((c) =>
-            '  • $c (+${WellsData.getCriterionScore(c)?.toStringAsFixed(1)} pts)')
-        .join('\n');
-
-    final soap = '''
-WELLS SCORE - RISCO DE TROMBOEMBOLISMO PULMONAR
-═════════════════════════════════════════════
-
-SUBJETIVO:
-Avaliação clínica completa realizada para estratificação de risco de TEP.
-
-OBJETIVO:
-Critérios Wells selecionados:
-$criteriaList
-
-Score Wells Total: $score pontos
-Classificação: $level
-Label: $label
-
-AVALIAÇÃO:
-$action
-
-PLANO:
-${recommendation['recommendation']}
-
-ECONOMIA SUS:
-${recommendation['saving_potential']}
-
-REFERÊNCIA:
-$reference
-
-═════════════════════════════════════════════
-''';
-
-    return ClipboardUtils.compactWhitespace(soap) +
-        ClipboardUtils.createStandardFooter();
+    return SOAPFormatter.generateWellsSOAP(
+      score: currentScore,
+      riskLevel: recommendation['level'] as String,
+      label: recommendation['label'] as String,
+      action: recommendation['action'] as String,
+      selectedCriteria: selectedCriteria.toList(),
+      criteriaScores: WellsData.criteria,
+    );
   }
 
   @override
